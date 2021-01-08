@@ -61,8 +61,8 @@ class Ui_MainWindow(QtWidgets.QWidget):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         #self.actionNew.triggered.connect(self.clicked)
-        #self.actionSave.triggered.connect(self.clicked)
-        #self.actionSave_as.triggered.connect(self.clicked)
+        self.actionSave.triggered.connect(self.save_as)
+        self.actionSave_as.triggered.connect(self.save_as)
         self.actionOpen.triggered.connect(self.open)
 
     def retranslateUi(self, MainWindow):
@@ -79,6 +79,9 @@ class Ui_MainWindow(QtWidgets.QWidget):
         self.actionUndo.setText(_translate("MainWindow", "Undo"))
         self.actionRedo.setText(_translate("MainWindow", "Redo"))
 
+    #def new(self):
+
+
     def open(self):
         fname = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file',
                                             '', '')
@@ -88,6 +91,14 @@ class Ui_MainWindow(QtWidgets.QWidget):
             with f:
                 data = f.read()
                 self.plainTextEdit.setPlainText(data)
+
+    def save_as(self):
+        fname = QtWidgets.QFileDialog.getSaveFileName(self, 'Save File')
+        f = open(fname[0], 'w')
+        text = self.plainTextEdit.toPlainText()
+        f.write(text)
+        f.close()
+
 
 if __name__ == "__main__":
     import sys
