@@ -9,6 +9,6 @@
 	  <file alias="cut">images/cut.png</file>
 	  <file alias="undo">images/undo.png</file>
 	  <file alias="redo">images/redo.png</file>
-
+	  <file alias="icon">images/app_icon.png</file>
 	</qresource>
 </RCC>

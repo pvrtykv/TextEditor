@@ -8,6 +8,8 @@ class Ui(QtWidgets.QMainWindow):
         super(Ui, self).__init__()  # Call the inherited classes __init__ method
         uic.loadUi('texteditor.ui', self)  # Load the .ui file
 
+        self.setWindowIcon(QtGui.QIcon('images/app_icon.png'))
+
         self.path = ""
         self.changed = False
 
