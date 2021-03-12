@@ -5,13 +5,13 @@ import pathlib
 
 class Ui(QtWidgets.QMainWindow):
     def __init__(self):
-        super(Ui, self).__init__() # Call the inherited classes __init__ method
-        uic.loadUi('texteditor.ui', self) # Load the .ui file
+        super(Ui, self).__init__()  # Call the inherited classes __init__ method
+        uic.loadUi('texteditor.ui', self)  # Load the .ui file
 
         self.path = ""
         self.changed = False
 
-        self.actionSave.triggered.connect(self.save_as)
+        self.actionSave.triggered.connect(self.save)
         self.actionSave_as.triggered.connect(self.save_as)
         self.actionOpen.triggered.connect(self.open)
         self.actionCopy.triggered.connect(self.editor.copy)
@@ -35,7 +35,7 @@ class Ui(QtWidgets.QMainWindow):
 
     def open(self):
         fname = QtWidgets.QFileDialog.getOpenFileName(self, 'Open file',
-                                            '', '')
+                                                      '', 'Text documents (*.txt);;All files (*.*)')
         if fname[0]:
             self.path = fname[0]
             f = open(fname[0], 'r')
@@ -46,7 +46,7 @@ class Ui(QtWidgets.QMainWindow):
             self.update_title()
 
     def save_as(self):
-        fname = QtWidgets.QFileDialog.getSaveFileName(self, 'Save File')
+        fname = QtWidgets.QFileDialog.getSaveFileName(self, 'Save File', '', 'Text documents (*.txt);;All files (*.*)')
         if fname[0] != "":
             self.path = fname[0]
             f = open(fname[0], 'w')
@@ -56,9 +56,21 @@ class Ui(QtWidgets.QMainWindow):
             self.changed = False
             self.update_title()
 
+    def save(self):
+        if self.path != "":
+            f = open(self.path, 'w')
+            text = self.editor.toPlainText()
+            f.write(text)
+            f.close()
+            self.changed = False
+            self.update_title()
+        else:
+            self.save_as()
+
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     window = Ui()
     window.show()
